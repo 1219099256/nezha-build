@@ -34,7 +34,8 @@ jobs:
     - name: Get version
       id: getver
       run: |
-        echo "::set-output name=body::`v0.4.14`"
+        export version=v0.4.14
+        echo "::set-env name=version::$version"
 
     - name: Create Release
       id: create_release
@@ -42,8 +43,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.getver.outputs.body }}
-        release_name: Release ${{ steps.getver.outputs.body }}
+        tag_name: $version
+        release_name: Release $version
         body: Binary build for Linux system with amd64 architecture.
         draft: false
         prerelease: false
@@ -56,5 +57,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
         asset_path: nezha/main
-        asset_name: main-${{ steps.getver.outputs.body }}
+        asset_name: main-$version
         asset_content_type: application/octet-stream
