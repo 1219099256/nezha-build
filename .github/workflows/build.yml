@@ -2,13 +2,16 @@ name: Build
 
 on:
   workflow_dispatch:
-  #push:
+  push:
 
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
+
+    env:
+      version: v0.6.7
 
     steps:
     - name: Checkout code
@@ -25,6 +28,9 @@ jobs:
         cd nezha
         go mod tidy -v
         CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build cmd/dashboard/main.go
+        mv main dashboard
+        CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build cmd/agent/main.go
+        mv main agent
 
     - name: Create Release
       id: create_release
@@ -32,19 +38,30 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.6.7
-        release_name: Release v0.6.7
+        tag_name: ${version}
+        release_name: Release ${version}
         body: Binary build for Linux system with amd64 architecture.
         draft: false
         prerelease: false
 
-    - name: Upload Release Asset
-      id: upload-release-asset
+    - name: Upload Release dashboard
+      id: upload-release-dashboard
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: nezha/main
-        asset_name: main
+        asset_path: nezha/dashboard
+        asset_name: dashboard
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release agent
+      id: upload-release-agent
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        asset_path: nezha/agent
+        asset_name: agent
         asset_content_type: application/octet-stream
