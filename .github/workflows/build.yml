@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
   push:
 
+env:
+  version: v0.6.7
+
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
-
-    env:
-      version: v0.6.7
 
     steps:
     - name: Checkout code
