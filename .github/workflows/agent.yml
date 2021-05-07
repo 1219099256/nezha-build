@@ -1,9 +1,7 @@
 name: Agent release
 
 on:
-  push:
-    tags:
-      - "v*"
+  push: 
 
 jobs:
   deploy:
