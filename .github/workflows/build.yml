@@ -1,8 +1,5 @@
 name: Build
 
-env:
-  VERSION: v0.6.7
-
 on:
   workflow_dispatch:
   push:
@@ -38,8 +35,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ VERSION }}
-        release_name: Release ${{ VERSION }}
+        tag_name: v0.6.7
+        release_name: Release v0.6.7
         body: Binary build for Linux system with amd64 architecture.
         draft: false
         prerelease: false
