@@ -38,8 +38,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${VERSION}
-        release_name: Release ${VERSION}
+        tag_name: ${{ VERSION }}
+        release_name: Release ${{ VERSION }}
         body: Binary build for Linux system with amd64 architecture.
         draft: false
         prerelease: false
