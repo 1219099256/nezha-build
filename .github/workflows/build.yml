@@ -35,8 +35,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.6.7
-        release_name: Release v0.6.7
+        tag_name: v0.7.1
+        release_name: Release v0.7.1
         body: Binary build for Linux system with amd64 architecture.
         draft: false
         prerelease: false
