@@ -28,6 +28,10 @@ jobs:
         mv main dashboard
         CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build cmd/agent/main.go
         mv main agent
+        
+    - name: Get version
+      id: getver
+      run: echo v0.10.6
 
 
     - name: Create Release
@@ -36,8 +40,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.10.4
-        release_name: Release v0.10.4
+        tag_name: ${{ steps.getver.outputs.body }}
+        release_name: Release ${{ steps.getver.outputs.body }}
         body: Binary build for Linux system with amd64 architecture.
         draft: false
         prerelease: false
