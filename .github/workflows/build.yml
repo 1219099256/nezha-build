@@ -31,7 +31,7 @@ jobs:
         
     - name: Get version
       id: getver
-      run: echo "::set-output name=body::`v0.10.6`"
+      run: echo "::set-output name=body::`echo v0.10.6`"
 
     - name: Create Release
       id: create_release
