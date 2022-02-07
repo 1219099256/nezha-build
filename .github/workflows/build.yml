@@ -13,6 +13,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      
+    - name: Get version
+      id: getver
+      run: echo "::set-output name=body::`echo v0.12.9`"
 
     - name: Set up Go
       uses: actions/setup-go@v1
@@ -29,10 +33,6 @@ jobs:
         CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build cmd/agent/main.go
         mv main agent
         
-    - name: Get version
-      id: getver
-      run: echo "::set-output name=body::`echo v0.11.9`"
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
