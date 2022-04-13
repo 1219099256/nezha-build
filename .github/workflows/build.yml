@@ -16,12 +16,12 @@ jobs:
       
     - name: Get version
       id: getver
-      run: echo "::set-output name=body::`echo v0.12.9`"
+      run: echo "::set-output name=body::`echo v0.12.19`"
 
     - name: Set up Go
       uses: actions/setup-go@v1
       with:
-        go-version: "^1.17.2"
+        go-version: "^1.18.0"
         
     - name: Build the nezha-dashboard
       run: |
